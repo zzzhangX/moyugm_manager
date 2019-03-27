@@ -7,7 +7,7 @@
       <div class="header-user-con">
         <ChooseLang/>
         <!-- 用户名下拉菜单 -->
-        <div>
+        <div class="userInfo">
           <el-dropdown size="mini" class="user-name" @command="handleCommand">
             <span class="el-dropdown-link">
               <i class="fa fa-user"></i>

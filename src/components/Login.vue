@@ -42,33 +42,43 @@ export default {
     submitForm: function(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (
-            this.ruleForm.username === "admin" &&
-            this.ruleForm.password === "111"
-          ) {
-            this.$message({
-              message: this.$t("login.success"),
-              type: "success",
-              duration: 1000
+          let url = "http://192.168.1.82:8000/auth/login";
+          // console.log(this.ruleForm);
+          // "FE1B6793470827BF3D1987CB58ECB522"
+          this.$axios({
+            method: "post",
+            url: url,
+            data: this.ruleForm
+          })
+            .then(resp => {
+              if (resp.data.code === "200") {
+                this.$message({
+                  message: this.$t("login.success"),
+                  type: "success",
+                  duration: 1000
+                });
+                localStorage.setItem("username", this.ruleForm.username);
+                localStorage.setItem("token", resp.data.msg);
+                this.$router.replace("/home");
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: this.$t("login.error"),
+                  type: "error"
+                });
+                this.$refs[formName].resetFields();
+              }
+            })
+            .catch(err => {
+              console.log(err);
             });
-            localStorage.setItem("username", this.ruleForm.username);
-            localStorage.setItem("token", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtb3l1LmFwaSIsIm5hbWUiOiJhZG1pbiIsImV4cCI6MTU1NDE3NjI5OX0=.D329UKK83QuasDccgqzPs2zuhCAyqL1tOA+hSoQ42BA=");
-            this.$router.replace("/home");
-          } else {
-            this.$message({
-              showClose: true,
-              message: this.$t("login.error"),
-              type: "error"
-            });
-            this.$refs[formName].resetFields();
-          }
         } else {
           this.$message({
             showClose: true,
             message: this.$t("login.warning"),
             type: "warning"
           });
-          return false;
+          
         }
       });
     }
@@ -157,7 +167,7 @@ export default {
   color: #ff3c52;
   display: none;
 }
-.language{
+.language {
   float: right;
 }
 </style>
