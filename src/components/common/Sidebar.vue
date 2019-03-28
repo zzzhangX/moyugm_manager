@@ -101,7 +101,6 @@ export default {
   computed: {
     onRoutes() {
       return this.$route.path.replace("/", "");
-      // console.log(this.$route.path.replace('/',''))
     }
   },
   created() {}
@@ -117,7 +116,7 @@ export default {
   display: block;
   overflow: hidden;
   overflow-y: scroll;
-  border-radius: 0 0 10px 10px
+  border-radius: 0 0 10px 0;
 }
 .sidebar::-webkit-scrollbar {
   width: 0;

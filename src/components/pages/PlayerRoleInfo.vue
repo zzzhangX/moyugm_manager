@@ -1,16 +1,6 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :span="3">
-        <el-select v-model="value" placeholder="请选择服务器">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </el-col>
       <el-col :span="4">
         <el-input v-model="roleId" placeholder="请输入玩家进行查询"></el-input>
       </el-col>
@@ -46,56 +36,54 @@ export default {
   name: "PlayerRoleInfo",
   data() {
     return {
-      options: [
-        {
-          value: "25001",
-          label: "一服"
-        },
-        {
-          value: "25002",
-          label: "二服"
-        }
-      ],
-      value: "",
-      roleId: "FE1B6793470827BF3D1987CB58ECB522",
+      roleId: "61A9000001",
       roleListArr: []
     };
   },
   created() {},
   methods: {
     searchRoleInfo() {
-      let url = "http://192.168.1.82:8000/query/userinfo";
-      let params = `{"serverId":${this.value},"openId":${this.roleId}}`;
-      // "FE1B6793470827BF3D1987CB58ECB522"
+      let url = "api/query/userinfo";
+      // let url = "api/query/rolelist";
+      // let url = "api/query/ranklist";
+      // let url = "api/query/openid";
+      let params = `{
+        "partition":${this.$store.state.serverId},
+        "openId":"FE1B6793470827BF3D1987CB58ECB522",
+        "roleId":"${this.roleId}"
+        }`;
       this.$axios({
         method: "post",
         url: url,
         data: params
       })
         .then(resp => {
-          console.log(resp.data.msg.UserList);
           let arr = resp.data.msg.UserList;
-          for (let i = 0; i < arr.length; i++) {
-            arr[i].RoleName = decodeURI(arr[i].RoleName);//转名字
-            arr[i].RoleSex == 0
-              ? (arr[i].RoleSex = "男")
-              : (arr[i].RoleSex = "女");//转性别
-            arr[i].CreateTime = this.exchangeDate(arr[i].CreateTime);
-            arr[i].LastLoginTime = this.exchangeDate(arr[i].LastLoginTime);
-            arr[i].LastLogoutTime = this.exchangeDate(arr[i].LastLogoutTime);//转日期
-            if(arr[i].Job == 1 ){
-              arr[i].Job = '战士'
-            }else if(arr[i].Job == 2){
-              arr[i].Job = '法师'
-            }else{
-              arr[i].Job = '血族'
-            }
-          }
-          this.roleListArr = arr;
+          this.roleListArr = this.exchange(arr)
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    exchange(arr) {
+      for (let i = 0; i < arr.length; i++) {
+        arr[i].RoleName = decodeURI(arr[i].RoleName); //转名字
+        arr[i].RoleSex == 0 ? (arr[i].RoleSex = "男") : (arr[i].RoleSex = "女"); //转性别
+        arr[i].CreateTime = this.exchangeDate(arr[i].CreateTime);
+        arr[i].LastLoginTime = this.exchangeDate(arr[i].LastLoginTime);
+        arr[i].LastLogoutTime = this.exchangeDate(arr[i].LastLogoutTime); //转日期
+        if (arr[i].Job == 1) {
+          arr[i].Job = "战士";
+        } else if (arr[i].Job == 2) {
+          arr[i].Job = "法师";
+        } else {
+          arr[i].Job = "血族";
+        } //转职业
+        arr[i].IsLogin === 0
+          ? (arr[i].IsLogin = "未登录")
+          : (arr[i].IsLogin = "登录"); //今日是否登录
+      }
+      return arr
     }
   }
 };
@@ -107,7 +95,7 @@ export default {
 .el-button {
   line-height: 1 !important;
 }
-.el-table{
-  margin-top: 1%
+.el-table {
+  margin-top: 1%;
 }
 </style>

@@ -9,7 +9,8 @@ import axios from 'axios';
 import VueI18n from 'vue-i18n'
 import LangEn from '../static/lang/en'
 import LangZhCHS from '../static/lang/zhCHS'
-import LangZhCHT from '../static/lang/zhCHT'
+import LangZhCHT from '../static/lang/zhCHT';
+import store from './store'
 axios.defaults.crossDomain = true;
 axios.defaults.headers["Content-Type"] = "application/json";
 // axios.defaults.headers["Authentication"] =
@@ -99,6 +100,7 @@ const i18n = new VueI18n({
 new Vue({
   el: '#app',
   router,
+  store,
   i18n,
   components: { App },
   template: '<App/>'

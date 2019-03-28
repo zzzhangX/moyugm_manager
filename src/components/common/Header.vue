@@ -1,10 +1,28 @@
 <template>
   <div class="header">
     <div class="logo">
-        <span>{{ $t("home.headerTitile") }}</span>     
-        </div>
+      <span>{{ $t("home.headerTitile") }}</span>
+    </div>
     <div class="header-right">
       <div class="header-user-con">
+        <!-- 选择服务器 -->
+        <div class="userInfo">
+          <el-dropdown size="mini" class="server-id" @command="changeServer">
+            <span class="el-dropdown-link">
+              <i class="fa fa-user"></i>
+              {{value}}
+              <i class="el-icon-arrow-down el-icon--rights"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item
+                v-for="item in options"
+                :key="item.value"
+                :command="item.value"
+              >{{item.label}}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+        <!-- 语言栏 -->
         <ChooseLang/>
         <!-- 用户名下拉菜单 -->
         <div class="userInfo">
@@ -31,8 +49,8 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">{{ $t("home.cancel") }}</el-button>
-            <el-button type="primary">{{ $t("home.sure") }}</el-button>
+            <el-button @click="cancelChange('form')">{{ $t("home.cancel") }}</el-button>
+            <el-button type="primary" @click="submitForm">{{ $t("home.sure") }}</el-button>
           </div>
         </el-dialog>
       </div>
@@ -45,22 +63,23 @@ import ChooseLang from "./ChooseLang";
 export default {
   data() {
     return {
+      options: [
+        {
+          value: "25001",
+          label: "一服"
+        },
+        {
+          value: "25002",
+          label: "二服"
+        }
+      ],
+      value: "",
       name: "unsigned",
       dialogFormVisible: false,
       formLabelWidth: "120px",
       form: {
         oldPwd: "",
         newPwd: ""
-      },
-      rules: {
-        oldPwd: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 6, max: 12, message: "长度在 6 到 12 个字符", trigger: "blur" }
-        ],
-        newPwd: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 6, max: 12, message: "长度在 6 到 12 个字符", trigger: "blur" }
-        ]
       }
     };
   },
@@ -71,49 +90,89 @@ export default {
     username() {
       let username = localStorage.getItem("username");
       return username ? username : this.name;
+    },
+    rules() {
+      return {
+        oldPwd: [
+          { required: true, message: this.$t("home.rules.nullPwd"), trigger: "blur" },
+          { min: 6, max: 12, message: this.$t("home.rules.wrongPwd"), trigger: "blur" }
+        ],
+        newPwd: [
+          { required: true, message:  this.$t("home.rules.nullPwd"), trigger: "blur" },
+          { min: 6, max: 12, message: this.$t("home.rules.wrongPwd"), trigger: "blur" }
+        ]
+      };
     }
   },
-
+  created() {
+    this.chooseServer();
+  },
   methods: {
     // 用户名下拉菜单选择事件
     handleCommand(command) {
       if (command === "logout") {
-        localStorage.removeItem("username");
-        localStorage.removeItem("token");
-        this.$router.push("/");
+        this.$confirm(this.$t("home.comfirm.title"), this.$t("home.comfirm.msg"), {
+          confirmButtonText: this.$t("home.sure"),
+          cancelButtonText: this.$t("home.cancel"),
+          type: "warning"
+        })
+          .then(() => {
+            localStorage.removeItem("username");
+            localStorage.removeItem("token");
+            this.$router.push("/");
+          })
+          .catch(() => {});
       } else {
         this.dialogFormVisible = true;
       }
+    },
+    //选择服务器事件
+    changeServer(command) {
+      this.$store.commit("changeServe", command);
+      this.chooseServer();
+    },
+    chooseServer() {
+      if (this.$store.state.serverId === "25001") {
+        this.value = "一服";
+      } else if (this.$store.state.serverId === "25002") {
+        this.value = "二服";
+      }
+    },
+    //取消修改密码
+    cancelChange(form){
+      this.$refs[form].resetFields();
+      this.dialogFormVisible = false;
+    },
+    //修改密码
+    submitForm() {
+      // this.$refs.form.validate( valid => {
+      //     if (valid) {
+      //         this.dialogFormVisible = false;
+      //         this.$axios.post('/api/pwd', {
+      //             oldPwd: this.form.oldPwd,
+      //             newPwd: this.form.newPwd
+      //         }).then( (response) => {
+      //             if (response.data.code === 0) {
+      //                 localStorage.removeItem('username');
+      //                 localStorage.removeItem('token');
+      //                 this.$router.push('/login');
+      //             } else {
+      //                 this.form.newPwd = '';
+      //                 this.form.oldPwd = '';
+      //                 this.$message.warning(response.data.msg);
+      //             }
+      //         }).catch( (error) => {
+      //             if(error.response){
+      //                 console.log(error.response.status + error.response.statusText);
+      //             } else {
+      //                 console.log('The request was made but no response was received :' + error.request);
+      //             }
+      //         });
+      //     } else {
+      //         return false;
+      //     }
+      // });
     }
-    // submitForm () {
-    //     this.$refs.form.validate( valid => {
-    //         if (valid) {
-    //             this.dialogFormVisible = false;
-    //             this.$axios.post('/api/pwd', {
-    //                 oldPwd: this.form.oldPwd,
-    //                 newPwd: this.form.newPwd
-    //             }).then( (response) => {
-    //                 if (response.data.code === 0) {
-    //                     localStorage.removeItem('username');
-    //                     localStorage.removeItem('token');
-    //                     this.$router.push('/login');
-    //                 } else {
-    //                     this.form.newPwd = '';
-    //                     this.form.oldPwd = '';
-    //                     this.$message.warning(response.data.msg);
-    //                 }
-    //             }).catch( (error) => {
-    //                 if(error.response){
-    //                     console.log(error.response.status + error.response.statusText);
-    //                 } else {
-    //                     console.log('The request was made but no response was received :' + error.request);
-    //                 }
-    //             });
-    //         } else {
-    //             return false;
-    //         }
-    //     });
-    // },
   }
 };
 </script>
@@ -126,15 +185,15 @@ export default {
   background-color: rgb(0, 0, 0);
   color: #fff;
   display: flex;
-  border-radius: 1px
+  border-radius: 1px;
 }
 .header .logo {
   text-align: left;
   line-height: 60px;
   flex: 0 0 84%;
 }
-.header .logo span{
-    margin-left: 1%
+.header .logo span {
+  margin-left: 1%;
 }
 .header-right {
   flex: 0 0 16%;
@@ -145,14 +204,17 @@ export default {
   height: 50px;
   align-items: center;
 }
-.el-dropdown-link{
-    font-weight: bold
+.el-dropdown-link {
+  font-weight: bold;
 }
 .btn-bell .el-icon-bell {
   color: #fff;
 }
 .user-name {
   margin-left: 15px;
+}
+.server-id {
+  margin-right: 15px;
 }
 .user-avator {
   margin-left: 20px;

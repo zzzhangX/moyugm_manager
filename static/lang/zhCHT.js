@@ -20,6 +20,14 @@ module.exports={
         oldPwd:'舊密碼',
         newPwd:'新密碼',
         cancel:'取消',
-        sure:'確定'
+        sure:'確定',
+        rules:{
+            nullPwd:'請輸入密碼',
+            wrongPwd:'長度在6到12個字元'
+        },
+        comfirm:{
+            title:'是否登出',
+            msg:'提示'
+        }
     }
 };

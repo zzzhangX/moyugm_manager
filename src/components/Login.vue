@@ -42,9 +42,7 @@ export default {
     submitForm: function(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let url = "http://192.168.1.82:8000/auth/login";
-          // console.log(this.ruleForm);
-          // "FE1B6793470827BF3D1987CB58ECB522"
+          let url = "api/auth/login";
           this.$axios({
             method: "post",
             url: url,
