@@ -43,17 +43,7 @@ export default {
         },
         {
           index: "playerRoleInfo",
-          title: "角色信息",
-        //   subs: [
-        //     {
-        //       index: "playerRoleInfo",
-        //       title: "角色查询"
-        //     },
-        //     {
-        //       index: "playerLevelFlow",
-        //       title: "等级流水"
-        //     }
-        //   ]
+          title: "角色信息"
         },
         {
           index: "backpackInfo",
@@ -65,35 +55,29 @@ export default {
         },
         {
           index: "recharge",
-          title: "充值相关",
-        //   subs: [
-        //     {
-        //       index: "itemInfo",
-        //       title: "道具查询"
-        //     },
-        //     {
-        //       index: "itemFlow",
-        //       title: "道具流水"
-        //     }
-        //   ]
+          title: "充值相关"
+        },
+        {
+          index: "trusteeship",
+          title: "托管"
+        },
+        {
+          index: "mail",
+          title: "邮件",
+          subs: [
+            {
+              index: "ordinarymail",
+              title: "普通邮件"
+            },
+            {
+              index: "fullservicemail",
+              title: "全服邮件"
+            }
+          ]
         },
         {
           index: "4",
-          title: "其他功能",
-        //   subs: [
-        //     {
-        //       index: "equipment",
-        //       title: "装备查询"
-        //     },
-        //     {
-        //       index: "equipmentFlow",
-        //       title: "装备流水"
-        //     },
-        //     {
-        //       index: "equipmentUpFlow",
-        //       title: "装备培养流水"
-        //     }
-        //   ]
+          title: "其他功能"
         }
       ]
     };

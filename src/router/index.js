@@ -21,6 +21,26 @@ export default new Router({
         {
           path: '/playerRoleInfo',
           component: resolve => require(['../components/pages/PlayerRoleInfo.vue'], resolve),
+        },
+        {
+          path: '/backpackInfo',
+          component: resolve => require(['../components/pages/BackpackInfo.vue'], resolve),
+        },
+        {
+          path: '/phantomInfo',
+          component: resolve => require(['../components/pages/PhantomInfo.vue'], resolve),
+        },
+        {
+          path: '/trusteeship',
+          component: resolve => require(['../components/pages/Trusteeship.vue'], resolve),
+        },
+        {
+          path: '/ordinarymail',
+          component: resolve => require(['../components/pages/Ordinarymail.vue'], resolve),
+        },
+        {
+          path: '/fullservicemail',
+          component: resolve => require(['../components/pages/Fullservicemail.vue'], resolve),
         }
       ]
     },

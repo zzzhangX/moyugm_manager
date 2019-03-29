@@ -44,9 +44,6 @@ export default {
   methods: {
     searchRoleInfo() {
       let url = "api/query/userinfo";
-      // let url = "api/query/rolelist";
-      // let url = "api/query/ranklist";
-      // let url = "api/query/openid";
       let params = `{
         "partition":${this.$store.state.serverId},
         "openId":"FE1B6793470827BF3D1987CB58ECB522",

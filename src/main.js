@@ -11,6 +11,8 @@ import LangEn from '../static/lang/en'
 import LangZhCHS from '../static/lang/zhCHS'
 import LangZhCHT from '../static/lang/zhCHT';
 import store from './store'
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)  //必须这样子引用 否则会报错的
 axios.defaults.crossDomain = true;
 axios.defaults.headers["Content-Type"] = "application/json";
 // axios.defaults.headers["Authentication"] =

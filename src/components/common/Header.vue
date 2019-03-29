@@ -37,9 +37,11 @@
               <el-dropdown-item divided command="logout">{{ $t("home.logout") }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-        </div>
-
-        <el-dialog :title="$t('home.changePwd')" :visible.sync="dialogFormVisible">
+        </div>       
+      </div>
+    </div>
+    <!-- 修改密码弹框 -->
+    <el-dialog :title="$t('home.changePwd')" :visible.sync="dialogFormVisible">
           <el-form :model="form" :rules="rules" status-icon ref="form">
             <el-form-item :label="$t('home.oldPwd')" :label-width="formLabelWidth" prop="oldPwd">
               <el-input v-model="form.oldPwd" auto-complete="off" type="password"></el-input>
@@ -53,8 +55,6 @@
             <el-button type="primary" @click="submitForm">{{ $t("home.sure") }}</el-button>
           </div>
         </el-dialog>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -182,27 +182,25 @@ export default {
   width: 100%;
   height: 60px;
   font-size: 22px;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(20, 20, 20);
   color: #fff;
   display: flex;
+  justify-content:space-between;
   border-radius: 1px;
 }
 .header .logo {
   text-align: left;
   line-height: 60px;
-  flex: 0 0 84%;
-}
-.header .logo span {
-  margin-left: 1%;
-}
-.header-right {
-  flex: 0 0 16%;
+  padding-left: 1%
 }
 .header-user-con {
   display: flex;
-  margin-left: 20px;
-  height: 50px;
+  height: 100%;
   align-items: center;
+  justify-content:center
+}
+.userInfo{
+  margin: 0 15px
 }
 .el-dropdown-link {
   font-weight: bold;
