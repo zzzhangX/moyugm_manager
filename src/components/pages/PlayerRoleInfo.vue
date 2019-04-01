@@ -2,13 +2,13 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="4">
-        <el-input v-model="roleId" placeholder="请输入玩家进行查询"></el-input>
+        <el-input v-model="openId" placeholder="请输入玩家进行查询"></el-input>
       </el-col>
       <el-col :span="2">
         <el-button type="primary" @click="searchRoleInfo">查询</el-button>
       </el-col>
     </el-row>
-    <el-table :data="roleListArr" style="width: 100%" border>
+    <el-table :data="roleListArr" style="width: 90% ;"  fit>
       <el-table-column fixed prop="RoleId" label="角色ID" width="110" align="center"></el-table-column>
       <el-table-column fixed prop="RoleName" label="角色名" width="100" align="center"></el-table-column>
       <el-table-column prop="RoleSex" label="性别" width="100" align="center"></el-table-column>
@@ -36,7 +36,7 @@ export default {
   name: "PlayerRoleInfo",
   data() {
     return {
-      roleId: "61A9000001",
+      openId: "",
       roleListArr: []
     };
   },
@@ -46,8 +46,7 @@ export default {
       let url = "api/query/userinfo";
       let params = `{
         "partition":${this.$store.state.serverId},
-        "openId":"FE1B6793470827BF3D1987CB58ECB522",
-        "roleId":"${this.roleId}"
+        "openId":"${this.openId}"
         }`;
       this.$axios({
         method: "post",

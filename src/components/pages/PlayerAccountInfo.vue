@@ -3,16 +3,18 @@
     <el-row :gutter="20">
       <h1>获取玩家号</h1>
       <el-col :span="4">
-        <el-input v-model="roleName" placeholder="请输入玩家昵称"></el-input>
+        <el-input v-model="roleName" placeholder="请输入玩家昵称" clearable></el-input>
       </el-col>
       <el-col :span="4">
-        <el-input v-model="roleId" placeholder="请输入玩家ID"></el-input>
+        <el-input v-model="roleId" placeholder="请输入玩家ID" clearable></el-input>
       </el-col>
       <el-col :span="2">
         <el-button type="primary" @click="searchRoleId">查询</el-button>
       </el-col>
-      <el-col :span="8" class="openId" v-show="isShow">
-        <span>{{openId}}</span>
+      <el-col :span="6" v-show="isShow">
+        <el-input placeholder="请输入内容" v-model="openId" clearable></el-input>
+      </el-col>
+      <el-col :span="1" v-show="isShow">
         <el-button
           type="primary"
           v-clipboard:copy="openId"
@@ -36,31 +38,8 @@ export default {
   },
   created() {},
   methods: {
-    searchRoleId() {
-      let params;
-      if (this.roleName === "" && this.roleId !== "") {
-        params = `{
-        "partition":${this.$store.state.serverId},
-        "roleId":"${this.roleId}"
-        }`;
-      } else if (this.roleId === "" && this.roleName !== "") {
-        params = `{
-        "partition":${this.$store.state.serverId},
-        "roleName":"${this.roleName}"
-        }`;
-      } else if (this.roleId !== "" && this.roleName !== "") {
-        params = `{
-        "partition":${this.$store.state.serverId},
-        "roleName":"${this.roleName}",
-        "roleId":"${this.roleId}"
-        }`;
-      } else {
-        this.$message({
-          showClose: true,
-          message: "请输入昵称或id",
-          type: "warning"
-        });
-      }
+    //连接数据
+    searchConnect(params){
       let url = "api/query/openid";
       this.$axios({
         method: "post",
@@ -69,7 +48,7 @@ export default {
       })
         .then(resp => {
           this.openId = resp.data.msg.OpenId;
-          if (this.openId !==undefined) {
+          if (this.openId !== undefined) {
             this.isShow = true;
           } else {
             this.$message({
@@ -82,6 +61,36 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    searchRoleId() {
+      let params;
+      if (this.roleName === "" && this.roleId !== "") {
+        params = `{
+        "partition":${this.$store.state.serverId},
+        "roleId":"${this.roleId}"
+        }`;
+        this.searchConnect(params)
+      } else if (this.roleId === "" && this.roleName !== "") {
+        params = `{
+        "partition":${this.$store.state.serverId},
+        "roleName":"${this.roleName}"
+        }`;
+        this.searchConnect(params)
+      } else if (this.roleId !== "" && this.roleName !== "") {
+        params = `{
+        "partition":${this.$store.state.serverId},
+        "roleName":"${this.roleName}",
+        "roleId":"${this.roleId}"
+        }`;
+        this.searchConnect(params)
+      } else {
+        this.$message({
+          showClose: true,
+          message: "请输入昵称或id",
+          type: "warning"
+        });
+      }
+      
     },
     copyOpenId(e) {
       this.$message({
@@ -120,9 +129,6 @@ export default {
 }
 .el-row:nth-of-type(1) h1 {
   padding: 20px;
-}
-.openId button {
-  margin-left: 40px;
 }
 </style>
 
