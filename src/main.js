@@ -21,8 +21,14 @@ Vue.use(ElementUI);
 Vue.use(VueI18n);
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
+Vue.prototype.$dateToms = function (date) {
+  let result = Date.parse(new Date(date))/1000
+  // let result = new Date(date).getTime();
+  return result;
+}//日期转时间戳
 Vue.prototype.exchangeDate = function (value) {
-  let date = new Date(value);
+  var date = new Date(value * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  // let date = new Date(value);
   let y = date.getFullYear();
   let MM = date.getMonth() + 1;
   MM = MM < 10 ? ('0' + MM) : MM;
@@ -36,7 +42,22 @@ Vue.prototype.exchangeDate = function (value) {
   s = s < 10 ? ('0' + s) : s;
   return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
 }
-
+Vue.prototype.$exchangeDate = function (value) {
+  var date = new Date(value * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  let y = date.getFullYear();
+  let MM = date.getMonth() + 1;
+  MM = MM < 10 ? ('0' + MM) : MM;
+  let d = date.getDate();
+  d = d < 10 ? ('0' + d) : d;
+  return y + '-' + MM + '-' + d;
+}
+Vue.prototype.$getDate = (offset = 0) => {
+  const date = new Date();
+  if (typeof offset === 'number' && offset !== 0) {
+    date.setDate(date.getDate() + offset);
+  }
+  return [date.getFullYear(), date.getMonth() + 1, date.getDate()].map((t) => (t.toString())[1] ? t : "0" + t).join("-");
+};
 let loading = null;
 // request 拦截器
 axios.interceptors.request.use(config => {

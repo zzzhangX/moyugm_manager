@@ -182,11 +182,12 @@ export default {
   width: 100%;
   height: 60px;
   font-size: 22px;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(5, 18, 31);
   color: #fff;
   display: flex;
   justify-content:space-between;
   border-radius: 1px;
+  user-select: none;
 }
 .header .logo {
   text-align: left;
