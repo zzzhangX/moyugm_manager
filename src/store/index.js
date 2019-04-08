@@ -4,7 +4,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     // 在state中去声明全局变量，可以通过 this.$store.state 访问
     state: {
-        serverId: '25001'
+        serverId: 25001
     },
     // 在getters中声明state中变量的计算函数，缓存计算后的数据， 通过 this.$store.getters 调用
     getters: {

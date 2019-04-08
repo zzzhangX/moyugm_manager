@@ -15,10 +15,10 @@
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item
-                v-for="item in options"
-                :key="item.value"
-                :command="item.value"
-              >{{item.label}}</el-dropdown-item>
+                v-for="(item,index) in serverlist"
+                :key="item.index"
+                :command="item.id"
+              >{{item.name}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -37,24 +37,24 @@
               <el-dropdown-item divided command="logout">{{ $t("home.logout") }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-        </div>       
+        </div>
       </div>
     </div>
     <!-- 修改密码弹框 -->
     <el-dialog :title="$t('home.changePwd')" :visible.sync="dialogFormVisible">
-          <el-form :model="form" :rules="rules" status-icon ref="form">
-            <el-form-item :label="$t('home.oldPwd')" :label-width="formLabelWidth" prop="oldPwd">
-              <el-input v-model="form.oldPwd" auto-complete="off" type="password"></el-input>
-            </el-form-item>
-            <el-form-item :label="$t('home.newPwd')" :label-width="formLabelWidth" prop="newPwd">
-              <el-input v-model="form.newPwd" auto-complete="off" type="password"></el-input>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="cancelChange('form')">{{ $t("home.cancel") }}</el-button>
-            <el-button type="primary" @click="submitForm">{{ $t("home.sure") }}</el-button>
-          </div>
-        </el-dialog>
+      <el-form :model="form" :rules="rules" status-icon ref="form">
+        <el-form-item :label="$t('home.oldPwd')" :label-width="formLabelWidth" prop="oldPwd">
+          <el-input v-model="form.oldPwd" auto-complete="off" type="password"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('home.newPwd')" :label-width="formLabelWidth" prop="newPwd">
+          <el-input v-model="form.newPwd" auto-complete="off" type="password"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelChange('form')">{{ $t("home.cancel") }}</el-button>
+        <el-button type="primary" @click="submitForm">{{ $t("home.sure") }}</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -63,14 +63,10 @@ import ChooseLang from "./ChooseLang";
 export default {
   data() {
     return {
-      options: [
+      serverlist: [
         {
-          value: "25001",
-          label: "一服"
-        },
-        {
-          value: "25002",
-          label: "二服"
+          id: 25001,
+          name: "雷鸣大陆"
         }
       ],
       value: "",
@@ -94,28 +90,72 @@ export default {
     rules() {
       return {
         oldPwd: [
-          { required: true, message: this.$t("home.rules.nullPwd"), trigger: "blur" },
-          { min: 6, max: 12, message: this.$t("home.rules.wrongPwd"), trigger: "blur" }
+          {
+            required: true,
+            message: this.$t("home.rules.nullPwd"),
+            trigger: "blur"
+          },
+          {
+            min: 6,
+            max: 12,
+            message: this.$t("home.rules.wrongPwd"),
+            trigger: "blur"
+          }
         ],
         newPwd: [
-          { required: true, message:  this.$t("home.rules.nullPwd"), trigger: "blur" },
-          { min: 6, max: 12, message: this.$t("home.rules.wrongPwd"), trigger: "blur" }
+          {
+            required: true,
+            message: this.$t("home.rules.nullPwd"),
+            trigger: "blur"
+          },
+          {
+            min: 6,
+            max: 12,
+            message: this.$t("home.rules.wrongPwd"),
+            trigger: "blur"
+          }
         ]
       };
     }
   },
   created() {
     this.chooseServer();
+    this.serverList();
   },
   methods: {
+    serverList() {
+      let url = "http://192.168.1.82:8000/config/serverlist";
+      let params = {};
+      this.$axios({
+        method: "get",
+        url: url,
+        data: params
+      })
+        .then(resp => {
+          if (resp.data.code == 200) {
+            // console.log(resp);
+            this.serverlist = resp.data.msg;
+            // console.log(this.serverlist);
+          } else {
+            console.error("获取数据失败" + err);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     // 用户名下拉菜单选择事件
     handleCommand(command) {
       if (command === "logout") {
-        this.$confirm(this.$t("home.comfirm.title"), this.$t("home.comfirm.msg"), {
-          confirmButtonText: this.$t("home.sure"),
-          cancelButtonText: this.$t("home.cancel"),
-          type: "warning"
-        })
+        this.$confirm(
+          this.$t("home.comfirm.title"),
+          this.$t("home.comfirm.msg"),
+          {
+            confirmButtonText: this.$t("home.sure"),
+            cancelButtonText: this.$t("home.cancel"),
+            type: "warning"
+          }
+        )
           .then(() => {
             localStorage.removeItem("username");
             localStorage.removeItem("token");
@@ -132,14 +172,19 @@ export default {
       this.chooseServer();
     },
     chooseServer() {
-      if (this.$store.state.serverId === "25001") {
-        this.value = "一服";
-      } else if (this.$store.state.serverId === "25002") {
-        this.value = "二服";
+      // console.log(this.serverlist);
+      // console.log(this.$store.state.serverId)
+      for (var i = 0; i < this.serverlist.length; i++) {
+        // console.log(this.serverlist[i].id)
+        // console.log(this.serverlist[i].name)
+        if (this.$store.state.serverId === this.serverlist[i].id) {
+          this.value = this.serverlist[i].name;
+          // console.log(this.serverlist[i].name)
+        }
       }
     },
     //取消修改密码
-    cancelChange(form){
+    cancelChange(form) {
       this.$refs[form].resetFields();
       this.dialogFormVisible = false;
     },
@@ -182,25 +227,26 @@ export default {
   width: 100%;
   height: 60px;
   font-size: 22px;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(5, 18, 31);
   color: #fff;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   border-radius: 1px;
+  user-select: none;
 }
 .header .logo {
   text-align: left;
   line-height: 60px;
-  padding-left: 1%
+  padding-left: 1%;
 }
 .header-user-con {
   display: flex;
   height: 100%;
   align-items: center;
-  justify-content:center
+  justify-content: center;
 }
-.userInfo{
-  margin: 0 15px
+.userInfo {
+  margin: 0 15px;
 }
 .el-dropdown-link {
   font-weight: bold;

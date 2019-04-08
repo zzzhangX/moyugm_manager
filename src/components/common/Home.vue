@@ -12,7 +12,7 @@
       </el-aside>
       <el-container>
         <el-main>
-          <!-- <vTags></vTags> -->
+          <vTags></vTags>
           <transition name="move" mode="out-in">
             <keep-alive :include="tagsList">
               <router-view :publicData="publicData"></router-view>
@@ -28,7 +28,7 @@
 <script>
 import vHead from "./Header.vue";
 import vSidebar from "./Sidebar.vue";
-// import vTags from "./Tags.vue";
+import vTags from "./Tags.vue";
 import bus from "./bus";
 export default {
   data() {
@@ -39,8 +39,8 @@ export default {
   },
   components: {
     vHead: vHead,
-    vSidebar: vSidebar
-    // vTags: vTags
+    vSidebar: vSidebar,
+    vTags: vTags
   },
   created() {
     // 只有在标签页列表里的页面才使用keep-alive
@@ -73,14 +73,15 @@ export default {
   /* background-color: #e9eef3; */
   color: #333;
   text-align: center;
-  line-height: 160px;
+  padding: 0 20px
+  /* line-height: 160px; */
 }
 .content-box {
   border: 1px solid red;
 }
 .el-main {
   margin: 1%;
-  border-radius: 5px;
+  border-radius: 20px;
   background-color: white;
 }
 </style>
