@@ -39,9 +39,12 @@
           <el-button size="mini" type="danger" @click="handleSearch(scope.$index, scope.row,3)">属性</el-button>
           <el-button size="mini" type="danger" @click="handleSearch(scope.$index, scope.row,4)">名人堂</el-button>
           <el-button size="mini" type="danger" @click="handleSearch(scope.$index, scope.row,5)">被禁止排行</el-button>
-
-          <el-button size="mini" type="danger" @click="rolevalue(scope.$index, scope.row)">昵称修改</el-button>
-
+          <el-button size="mini" type="danger" @click="rolevalue(scope.$index, scope.row)">昵称修改</e
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleSearch(scope.$index, scope.row,5)"
+          >被禁止排行</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -108,7 +111,6 @@
         <el-button type="primary" @click="banrankinfo_Visible = false">确 定</el-button>
       </div>
     </el-dialog>
-
     <!-- 修改昵称 -->
     <el-dialog title="昵称修改" :visible.sync="change_Visible" width="25%">
       <el-form :model="roleForm" :rules="rules" ref="roleForm">
@@ -131,7 +133,6 @@
 
       </div>
     </el-dialog>
-
   </div>
 </template>
 <script>
@@ -139,19 +140,6 @@ export default {
   name: "PlayerRoleInfo",
   data() {
     return {
-      change_Visible: false,
-      roleForm: {
-        openId: "",
-        roleId: "",
-        RoleName: "",
-        modifyRoleName: ""
-      },
-      rules: {
-        modifyRoleName: [
-          { required: true, message: "新昵称不能为空", trigger: "blur" }
-        ]
-      },
-
       openId: "FE1B6793470827BF3D1987CB58ECB522",
       roleListArr: [],
       VIP_Visible: false,
@@ -230,10 +218,40 @@ export default {
           } else {
             console.error("获取数据失败" + err);
           }
-        })
-        .catch(err => {
+        }).catch(err => {
           console.log(err);
         });
+    },
+    searchRoleInfo() {
+      if (this.openId === "") {
+        this.$message({
+          showClose: true,
+          message: "请输入玩家账号",
+          type: "warning"
+        });
+      } else {
+        let url = "api/query/userinfo";
+        let params = `{
+        "partition":${this.$store.state.serverId},
+        "openId":"${this.openId}"
+        }`;
+        this.$axios({
+          method: "post",
+          url: url,
+          data: params
+        })
+          .then(resp => {
+            let arr = resp.data.msg.UserList;
+            this.roleListArr = this.exchange(arr);
+          })
+          .catch(err => {
+            this.$message({
+              showClose: true,
+              message: "请检查是否输入正确",
+              type: "error"
+            });
+          });
+      }
     },
 
     searchRoleInfo() {
