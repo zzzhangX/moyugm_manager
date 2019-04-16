@@ -38,13 +38,12 @@
           <el-button size="mini" type="danger" @click="handleSearch(scope.$index, scope.row,2)">军团</el-button>
           <el-button size="mini" type="danger" @click="handleSearch(scope.$index, scope.row,3)">属性</el-button>
           <el-button size="mini" type="danger" @click="handleSearch(scope.$index, scope.row,4)">名人堂</el-button>
-          <el-button size="mini" type="danger" @click="handleSearch(scope.$index, scope.row,5)">被禁止排行</el-button>
-          <el-button size="mini" type="danger" @click="rolevalue(scope.$index, scope.row)">昵称修改</e
           <el-button
             size="mini"
             type="danger"
             @click="handleSearch(scope.$index, scope.row,5)"
           >被禁止排行</el-button>
+          <el-button size="mini" type="danger" @click="rolevalue(scope.$index, scope.row)">昵称修改</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -113,7 +112,7 @@
     </el-dialog>
     <!-- 修改昵称 -->
     <el-dialog title="昵称修改" :visible.sync="change_Visible" width="25%">
-      <el-form :model="roleForm" :rules="rules" ref="roleForm">
+      <el-form :model="roleForm" ref="roleForm">
         <el-form-item label="玩家id" label-width="100">
           <el-input disabled v-model="roleForm.openId" auto-complete="off" width="10"></el-input>
         </el-form-item>
@@ -130,7 +129,6 @@
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="send('roleForm')">确 定</el-button>
         <el-button @click="resetForm()">重 置</el-button>
-
       </div>
     </el-dialog>
   </div>
@@ -147,6 +145,7 @@ export default {
       roleAttr_Visible: false,
       famehallinfo_Visible: false,
       banrankinfo_Visible: false,
+      change_Visible: false,
       VIPform: {
         Level: "",
         Exp: "",
@@ -160,7 +159,13 @@ export default {
       legionInfo: "",
       pageNo: 1,
       Ban: false,
-      noBan: false
+      noBan: false,
+      roleForm: {
+        modifyRoleName: "",
+        openId: "",
+        roleId: "",
+        RoleName: ""
+      }
     };
   },
   created() {},
@@ -187,7 +192,6 @@ export default {
             if (valid) {
               this.changerolename();
             } else {
-              this.mailError();
               return false;
             }
           });
@@ -195,7 +199,7 @@ export default {
         .catch(() => {});
     },
     changerolename() {
-      let url = "http://192.168.1.82:8000/gm/changerolename";
+      let url = "api/gm/changerolename";
       let params = {
         partition: Number(this.$store.state.serverId),
         openId: this.roleForm.openId,
@@ -218,7 +222,8 @@ export default {
           } else {
             console.error("获取数据失败" + err);
           }
-        }).catch(err => {
+        })
+        .catch(err => {
           console.log(err);
         });
     },
@@ -231,48 +236,18 @@ export default {
         });
       } else {
         let url = "api/query/userinfo";
-        let params = `{
-        "partition":${this.$store.state.serverId},
-        "openId":"${this.openId}"
-        }`;
+        let params = {
+          partition: Number(this.$store.state.serverId),
+          openId: this.openId
+        };
+        console.log(params)
         this.$axios({
           method: "post",
           url: url,
           data: params
         })
           .then(resp => {
-            let arr = resp.data.msg.UserList;
-            this.roleListArr = this.exchange(arr);
-          })
-          .catch(err => {
-            this.$message({
-              showClose: true,
-              message: "请检查是否输入正确",
-              type: "error"
-            });
-          });
-      }
-    },
-
-    searchRoleInfo() {
-      if (this.openId === "") {
-        this.$message({
-          showClose: true,
-          message: "请输入玩家账号",
-          type: "warning"
-        });
-      } else {
-        let url = "api/query/userinfo";
-        let params = `{
-        "partition":${this.$store.state.serverId},
-        "openId":"${this.openId}"
-        }`;
-        this.$axios({
-          method: "post",
-          url: url,
-          data: params
-        })
-          .then(resp => {
+            console.log(resp);
             let arr = resp.data.msg.UserList;
             this.roleListArr = this.exchange(arr);
           })
@@ -331,7 +306,7 @@ export default {
           params.pageNo = this.pageNo;
           break;
       }
-      console.log(params);
+      // console.log(params);
       this.$axios({
         method: "post",
         url: url,
@@ -343,7 +318,13 @@ export default {
               this.VIPform = resp.data.msg;
               break;
             case 2:
+              // console.log(resp);
               this.legionInfo = resp.data.msg;
+              if (this.legionInfo === "") {
+                this.legionInfo = "暂无军团信息";
+              } else {
+                this.legionInfo = "待完善。。。";
+              }
               break;
             case 3:
               console.log(resp);

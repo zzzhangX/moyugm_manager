@@ -79,11 +79,6 @@ export default new Router({
           path: '/funclist',
           component: resolve => require(['../components/pages/Funclist.vue'], resolve),
           meta: { title: '游戏功能' },
-        },
-        {
-          path: '/fullservicemail',
-          component: resolve => require(['../components/pages/Fullservicemail.vue'], resolve),
-          meta: { title: '全服邮件' }
         }
       ]
     },

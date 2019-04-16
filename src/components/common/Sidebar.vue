@@ -86,16 +86,6 @@ export default {
           ]
         },
         {
-          index: "mail",
-          title: "邮件",
-          subs: [
-            {
-              index: "whiteList",
-              title: "白名单操作"
-            }
-          ]
-        },
-        {
           index: "ordinarymail",
           title: "邮件"
         },

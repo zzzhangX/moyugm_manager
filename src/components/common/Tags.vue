@@ -101,7 +101,7 @@ export default {
 </script>
 
 
-<style>
+<style scpoed>
 .el-dropdown{
     line-height: normal !important;
     display: block

@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="4" :offset="1">
         <el-select style="width:100%" v-model="tablepartition" placeholder="请选择服务器" @change="mailchange()">
-          <el-option v-for="(item,index) in serverlist" :key="item.index" :label="item.id" :value="item.id"></el-option>
+          <el-option v-for="(item,index) in serverlist" :key="index" :label="item.id" :value="item.id"></el-option>
         </el-select>
       </el-col>
       <el-col :span="2" :offset="12">
@@ -32,7 +32,7 @@
               <el-col :span="10" :offset="1" v-if="this.value!=4137">
                 <el-form-item label="服务器" prop="partition">
                   <el-select style="width:100%" v-model="mailForm.partition" placeholder="请选择服务器">
-                    <el-option v-for="(item,index) in serverlist" :key="item.index" :label="item.name" :value="item.id"></el-option>
+                    <el-option v-for="(item,index) in serverlist" :key="index" :label="item.name" :value="item.id"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -43,7 +43,7 @@
               <el-col :span="10" :offset="1" v-if="this.value==4137">
                 <el-form-item label="服务器" prop="partitionlist">
                   <el-select multiple style="width:100%" v-model="mailForm.partitionList" placeholder="请选择服务器">
-                    <el-option v-for="(item,index) in serverlist" v-bind:key="item.index" :label="item.name" :value="item.id"></el-option>
+                    <el-option v-for="(item,index) in serverlist" v-bind:key="index" :label="item.name" :value="item.id"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -184,7 +184,7 @@
           <!-- 服务器列，服务器信息，固定在左侧 -->
           <el-table-column fixed prop="partition" label="服务器" width="100px" :show-overflow-tooltip="true" align="center"></el-table-column>
           <!-- 信息列，除服务器与附件详情外的信息循环显示 -->
-          <div v-for="(item,index) in maillist" :key="item.index">
+          <div v-for="(item,index) in maillist" :key="index">
             <el-table-column :key="Math.random()" v-if="item.show" :prop="item.prop" :label="item.label" :width="item.width" :show-overflow-tooltip="true" align="center"></el-table-column>
           </div>
           <!-- 附件详情列，点击按钮查看对应行附件详情 -->
@@ -196,7 +196,7 @@
         </el-table>
         <!-- 附件详情页，展示附件详情信息 -->
         <el-dialog title="附件详情" :visible.sync="centerDialogVisible" width="40%" center>
-          <div v-for="(item,index) in dialoglist" class="dialog">
+          <div v-for="(item,index) in dialoglist" :key="index" class="dialog">
             <el-row class="dialogrow">
               <el-col :span="7" :offset="4">
                 <span>附件Id：</span>
@@ -1076,7 +1076,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 /* 表单样式 */
 .mailForm {
   padding: 3%;

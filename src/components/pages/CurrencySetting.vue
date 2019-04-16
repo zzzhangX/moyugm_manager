@@ -19,15 +19,15 @@
     <!-- 修改魔龙卡 -->
     <el-dialog title="修改魔龙卡" :visible.sync="monthcard_Visible" width="20%">
       <div>
-        <el-form>
+        <el-form label-width="120px">
           <el-form-item :label-position="labelPosition" label="类型：">
-            <el-select v-model="cardType" placeholder="类型">
+            <el-select v-model="cardType" placeholder="类型" style="width: 100%;">
               <el-option label="周卡" value="1"></el-option>
               <el-option label="月卡" value="2"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item :label-position="labelPosition" label="数量（天）：">
-            <el-input-number v-model="amount"></el-input-number>
+            <el-input-number v-model="amount" style="width: 100%;"></el-input-number>
           </el-form-item>
         </el-form>
       </div>
@@ -39,16 +39,16 @@
     <!-- 修改货币 -->
     <el-dialog title="设置货币" :visible.sync="currency_Visible" width="20%">
       <div>
-        <el-form>
+        <el-form label-width="120px">
           <el-form-item :label-position="labelPosition" label="类型：">
-            <el-select v-model="currencyType" placeholder="类型">
+            <el-select v-model="currencyType" placeholder="类型" style="width: 100%;">
               <el-option label="游戏币" value="4123"></el-option>
               <el-option label="魔石" value="4125"></el-option>
               <el-option label="绑定魔石" value="4203"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item :label-position="labelPosition" label="数量：">
-            <el-input-number v-model="amount"></el-input-number>
+            <el-input-number v-model="amount" style="width: 100%;"></el-input-number>
           </el-form-item>
         </el-form>
       </div>

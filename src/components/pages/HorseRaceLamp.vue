@@ -49,7 +49,7 @@
     </div>
     <!-- 添加跑马灯 -->
     <el-dialog title="添加跑马灯" :visible.sync="addLampVisible" width="30%">
-      <el-form :model="addLampForm" label-width="120px">
+      <el-form :model="addLampForm">
         <el-form-item label="服务器">
           <el-select
             v-model="addLampForm.partition"

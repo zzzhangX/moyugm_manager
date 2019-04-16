@@ -3,7 +3,7 @@
     <el-row class="choose">
       <el-col :span="4" :offset="1">
         <el-select style="width:100%" v-model="tablepartition" placeholder="请选择服务器" @change="funcList()">
-          <el-option v-for="(item,index) in serverlist" :key="item.index" :label="item.name" :value="item.id"></el-option>
+          <el-option v-for="(item,index) in serverlist" :key="index" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </el-col>
     </el-row>
@@ -132,7 +132,7 @@ export default {
     //获取游戏功能列表
     funcList() {
       this.switchMsg = [];
-      let url = "http://192.168.1.82:8000/gm/funclist";
+      let url = "api/gm/funclist";
       let params = {
         partition: this.tablepartition,
         pageNo: this.PageNo
