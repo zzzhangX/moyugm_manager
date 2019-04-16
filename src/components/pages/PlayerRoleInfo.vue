@@ -134,6 +134,7 @@
   </div>
 </template>
 <script>
+// import search from '../common/Search'
 export default {
   name: "PlayerRoleInfo",
   data() {
@@ -168,6 +169,9 @@ export default {
       }
     };
   },
+  // components:{
+  //   search:search
+  // },
   created() {},
   methods: {
     resetForm() {

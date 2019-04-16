@@ -695,7 +695,7 @@ export default {
     },
     // 金币邮件，之后的接口函数参照本函数注释
     mailMoneySend() {
-      let url = "http://192.168.1.82:8000/gm/sendmailtoroles";
+      let url = "api/gm/sendmailtoroles";
       let params = {
         type: this.value,
         partition: this.mailForm.partition,
@@ -733,7 +733,7 @@ export default {
     },
     // 魔石邮件
     mailMagicSend() {
-      let url = "http://192.168.1.82:8000/gm/sendmailtoroles";
+      let url = "api/gm/sendmailtoroles";
       let params = {
         type: this.value,
         partition: this.mailForm.partition,
@@ -767,7 +767,7 @@ export default {
     },
     // 绑定魔石邮件
     mailBoundMagicSend() {
-      let url = "http://192.168.1.82:8000/gm/sendmailtoroles";
+      let url = "api/gm/sendmailtoroles";
       let params = {
         type: this.value,
         partition: this.mailForm.partition,
@@ -801,7 +801,7 @@ export default {
     },
     // 道具邮件
     mailItemSend() {
-      let url = "http://192.168.1.82:8000/gm/sendmailtoroles";
+      let url = "api/gm/sendmailtoroles";
       let params = {
         type: this.value,
         partition: this.mailForm.partition,
@@ -836,7 +836,7 @@ export default {
     },
     // 系统邮件
     mailSystemSend() {
-      let url = "http://192.168.1.82:8000/gm/sendmailtoroles";
+      let url = "api/gm/sendmailtoroles";
       let params = {
         type: this.value,
         partition: this.mailForm.partition,
@@ -870,7 +870,7 @@ export default {
     },
     // 全服邮件
     mailAllServerSend() {
-      let url = "http://192.168.1.82:8000/gm/sendmailtoservers";
+      let url = "api/gm/sendmailtoservers";
       let params = {
         partition: this.mailForm.partitionList,
         mailTitle: this.mailForm.mailTitle,
@@ -908,7 +908,7 @@ export default {
     },
     //获取服务器列表
     serverList() {
-      let url = "http://192.168.1.82:8000/config/serverlist";
+      let url = "api/config/serverlist";
       let params = {};
       this.$axios({
         method: "get",
@@ -952,7 +952,7 @@ export default {
       // 清空邮件信息初始存储数组和转存数组
       this.maildata = [];
       this.mailtransdata = [];
-      let url = "http://192.168.1.82:8000/gm/getmaillist";
+      let url = "api/gm/getmaillist";
       let params = {
         partition: this.tablepartition,
         type: this.tablevalue,

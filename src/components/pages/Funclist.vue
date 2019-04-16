@@ -110,7 +110,7 @@ export default {
     },
     //获取服务器列表
     serverList() {
-      let url = "http://192.168.1.82:8000/config/serverlist";
+      let url = "api/config/serverlist";
       let params = {};
       this.$axios({
         method: "get",
@@ -186,7 +186,7 @@ export default {
       console.log(typeof(this.tablepartition))
       console.log(typeof(this.funcId))
       console.log(typeof(this.state))
-      let url = "http://192.168.1.82:8000/gm/setfuncstate";
+      let url = "api/gm/setfuncstate";
       let params = {
         partition: this.tablepartition,
         funcId: this.funcId,

@@ -49,7 +49,7 @@
     </div>
     <!-- 添加跑马灯 -->
     <el-dialog title="添加跑马灯" :visible.sync="addLampVisible" width="30%">
-      <el-form :model="addLampForm">
+      <el-form :model="addLampForm" label-width="120px">
         <el-form-item label="服务器">
           <el-select
             v-model="addLampForm.partition"
@@ -211,6 +211,7 @@ export default {
         notifyCD: this.addLampForm.notifyCD,
         msg: this.addLampForm.msg
       };
+      console.log(params)
       this.$axios({
         method: "post",
         url: url,

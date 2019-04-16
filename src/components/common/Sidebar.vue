@@ -40,69 +40,125 @@
 export default {
   data() {
     return {
-      items: [
-        {
-          index: "home",
-          title: "账号信息"
-        },
-        {
-          index: "roleInfo",
-          title: "角色信息",
-          subs: [
-            { index: "playerRoleInfo", title: "基础信息" },
-            { index: "currencySetting", title: "货币设置" },
-            { index: "rankingList", title: "排行榜信息" },
-            { index: "recharge", title: "充值相关" }
-          ]
-        },
-        {
-          index: "backpackInfo",
-          title: "背包信息"
-        },
-        {
-          index: "changeExp",
-          title: "修改经验"
-        },
-        {
-          index: "phantomInfo",
-          title: "幻兽信息"
-        },
-        {
-          index: "trusteeship",
-          title: "托管"
-        },
-        {
-          index: "horseRaceLamp",
-          title: "跑马灯"
-        },
-        {
-          index: "serverOperation",
-          title: "服务器操作",
-          subs: [
-            {
-              index: "whiteList",
-              title: "白名单操作"
-            }
-          ]
-        },
-        {
-          index: "ordinarymail",
-          title: "邮件"
-        },
-        {
-          index: "funclist",
-          title: "游戏功能"
-        },
-        {
-          index: "4",
-          title: "其他功能"
-        }
-      ]
+      // items: [
+      //   {
+      //     index: "home",
+      //     title: this.$t('sidebar.home')
+      //   },
+      //   {
+      //     index: "roleInfo",
+      //     title: "角色信息",
+      //     subs: [
+      //       { index: "playerRoleInfo", title: "基础信息" },
+      //       { index: "currencySetting", title: "货币设置" },
+      //       { index: "rankingList", title: "排行榜信息" },
+      //       { index: "recharge", title: "充值相关" }
+      //     ]
+      //   },
+      //   {
+      //     index: "backpackInfo",
+      //     title: "背包信息"
+      //   },
+      //   {
+      //     index: "changeExp",
+      //     title: "修改经验"
+      //   },
+      //   {
+      //     index: "phantomInfo",
+      //     title: "幻兽信息"
+      //   },
+      //   {
+      //     index: "trusteeship",
+      //     title: "托管"
+      //   },
+      //   {
+      //     index: "horseRaceLamp",
+      //     title: "跑马灯"
+      //   },
+      //   {
+      //     index: "serverOperation",
+      //     title: "服务器操作",
+      //     subs: [
+      //       {
+      //         index: "whiteList",
+      //         title: "白名单操作"
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     index: "ordinarymail",
+      //     title: "邮件"
+      //   },
+      //   {
+      //     index: "funclist",
+      //     title: "游戏功能"
+      //   },
+      //   {
+      //     index: "4",
+      //     title: "其他功能"
+      //   }
+      // ]
     };
   },
   computed: {
     onRoutes() {
       return this.$route.path.replace("/", "");
+    },
+    items(){
+      return  [
+        {
+          index: "home",
+          title: this.$t('sidebar.home')
+        },
+        {
+          index: "roleInfo",
+          title: this.$t('sidebar.roleInfo'),
+          subs: [
+            { index: "playerRoleInfo", title: this.$t('sidebar.playerRoleInfo') },
+            { index: "currencySetting", title: this.$t('sidebar.currencySetting') },
+            { index: "rankingList", title: this.$t('sidebar.rankingList') },
+            { index: "recharge", title: this.$t('sidebar.recharge') }
+          ]
+        },
+        {
+          index: "backpackInfo",
+          title:  this.$t('sidebar.backpackInfo') 
+        },
+        {
+          index: "changeExp",
+          title: this.$t('sidebar.changeExp') 
+        },
+        {
+          index: "phantomInfo",
+          title: this.$t('sidebar.phantomInfo') 
+        },
+        {
+          index: "trusteeship",
+          title: this.$t('sidebar.trusteeship') 
+        },
+        {
+          index: "horseRaceLamp",
+          title: this.$t('sidebar.horseRaceLamp') 
+        },
+        {
+          index: "serverOperation",
+          title: this.$t('sidebar.serverOperation') ,
+          subs: [
+            {
+              index: "whiteList",
+              title: this.$t('sidebar.whiteList')
+            }
+          ]
+        },
+        {
+          index: "ordinarymail",
+          title: this.$t('sidebar.ordinarymail')
+        },
+        {
+          index: "funclist",
+          title: this.$t('sidebar.funclist')
+        }
+      ]
     }
   },
   created() {}

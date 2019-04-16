@@ -31,5 +31,30 @@ module.exports={
             msg:'提示'
         }
         //sidebar
+    },
+    tags:{
+        tagsChoose:'标签选项',
+        closeOthers:'关闭其他',
+        closeAll:'关闭所有'
+    },
+    sidebar:{
+        home:'账号信息',
+        roleInfo:'角色信息',
+        playerRoleInfo:'基础信息',
+        currencySetting:'货币设置',
+        rankingList:'排行榜信息',
+        recharge:'充值相关',
+        backpackInfo:'背包信息',
+        changeExp:'修改经验',
+        phantomInfo:'幻兽信息',
+        trusteeship:'托管',
+        horseRaceLamp:'跑马灯',
+        serverOperation:'服务器操作',
+        whiteList:'白名单操作',
+        ordinarymail:'邮件',
+        funclist:'游戏功能'
+    },
+    backpackInfo:{
+        
     }
 };

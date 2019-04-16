@@ -16,12 +16,12 @@
     <div class="tags-close-box">
       <el-dropdown size="mini" @command="handleTags">
         <el-button size="mini" type="primary">
-          标签选项
+          {{ $t("tags.tagsChoose") }}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu size="small" slot="dropdown">
-          <el-dropdown-item command="other">关闭其他</el-dropdown-item>
-          <el-dropdown-item command="all">关闭所有</el-dropdown-item>
+          <el-dropdown-item command="other">{{$t("tags.closeOthers") }}</el-dropdown-item>
+          <el-dropdown-item command="all">{{$t("tags.closeAll") }}</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -73,7 +73,7 @@ export default {
           this.tagsList.shift();
         }
         this.tagsList.push({
-          title: route.meta.title,
+          title: this.$t(route.meta.title),
           path: route.fullPath,
           name: route.matched[1].components.default.name
         });

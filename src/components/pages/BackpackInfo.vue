@@ -292,6 +292,7 @@ export default {
               };
               break;
             case 3:
+            console.log(resp.data.msg.EquipList)
               this.list.equipment = this.exchange(resp.data.msg.EquipList);
               this.isShow = {
                 itemlist: false,
@@ -382,7 +383,7 @@ export default {
           arr[i].Name = decodeURI(arr[i].Name); //转名字
         }
         if (arr[i].GemHoles) {
-          arr[i].GemHoles = decodeURI(arr[i].GemHoles); //转名字
+          arr[i].GemHoles = decodeURI('0%3A'); //转名字
         }
         if (arr[i].Phasic) {
           arr[i].Phasic = decodeURI(arr[i].Phasic); //转名字

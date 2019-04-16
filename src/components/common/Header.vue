@@ -16,7 +16,7 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item
                 v-for="(item,index) in serverlist"
-                :key="item.index"
+                :key="index"
                 :command="item.id"
               >{{item.name}}</el-dropdown-item>
             </el-dropdown-menu>
@@ -65,8 +65,8 @@ export default {
     return {
       serverlist: [
         {
-          id: 25001,
-          name: "雷鸣大陆"
+          name:'雷鸣大陆',
+          id:25001
         }
       ],
       value: "",
@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     serverList() {
-      let url = "http://192.168.1.82:8000/config/serverlist";
+      let url = "api/config/serverlist";
       let params = {};
       this.$axios({
         method: "get",

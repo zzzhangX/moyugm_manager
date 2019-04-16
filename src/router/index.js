@@ -18,67 +18,67 @@ export default new Router({
         {
           path: '',
           component: resolve => require(['../components/pages/PlayerAccountInfo.vue'], resolve),
-          meta: { title: '账号信息' }
+          meta: { title: 'sidebar.home' }
         },
         {
           path: '/playerRoleInfo',
           component: resolve => require(['../components/pages/PlayerRoleInfo.vue'], resolve),
-          meta: { title: '基础信息' }
+          meta: { title: 'sidebar.playerRoleInfo' }
         },
         {
           path: '/currencySetting',
           component: resolve => require(['../components/pages/CurrencySetting.vue'], resolve),
-          meta: { title: '货币设置' }
+          meta: { title: 'sidebar.currencySetting' }
         },
         {
           path: '/rankingList',
           component: resolve => require(['../components/pages/RankingList.vue'], resolve),
-          meta: { title: '排行榜信息' }
+          meta: { title: 'sidebar.rankingList' }
         },
         {
           path: '/recharge',
           component: resolve => require(['../components/pages/Recharge.vue'], resolve),
-          meta: { title: '充值相关' }
+          meta: { title: 'sidebar.recharge' }
         },
         {
           path: '/backpackInfo',
           component: resolve => require(['../components/pages/BackpackInfo.vue'], resolve),
-          meta: { title: '背包信息' }
+          meta: { title: 'sidebar.backpackInfo' }
         },
         {
           path: '/changeexp',
           component: resolve => require(['../components/pages/Changeexp.vue'], resolve),
-          meta: { title: '修改经验' }
+          meta: { title: 'sidebar.changeExp' }
         },
         {
           path: '/phantomInfo',
           component: resolve => require(['../components/pages/PhantomInfo.vue'], resolve),
-          meta: { title: '幻兽信息' }
+          meta: { title: 'sidebar.phantomInfo' }
         },
         {
           path: '/trusteeship',
           component: resolve => require(['../components/pages/Trusteeship.vue'], resolve),
-          meta: { title: '托管' }
+          meta: { title: 'sidebar.trusteeship' }
         },
         {
           path: '/horseRaceLamp',
           component: resolve => require(['../components/pages/HorseRaceLamp.vue'], resolve),
-          meta: { title: '跑马灯' }
+          meta: { title: 'sidebar.horseRaceLamp' }
         },
         {
           path: '/whiteList',
           component: resolve => require(['../components/pages/WhiteList.vue'], resolve),
-          meta: { title: '操作白名单' }
+          meta: { title: 'sidebar.whiteList' }
         },
         {
           path: '/ordinarymail',
           component: resolve => require(['../components/pages/Ordinarymail.vue'], resolve),
-          meta: { title: '普通邮件' }
+          meta: { title: 'sidebar.ordinarymail' }
         },
         {
           path: '/funclist',
           component: resolve => require(['../components/pages/Funclist.vue'], resolve),
-          meta: { title: '游戏功能' },
+          meta: { title: 'sidebar.funclist' }
         }
       ]
     },
